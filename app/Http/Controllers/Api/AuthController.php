@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Traits\PrestashopApi;
 
 class AuthController extends Controller
 {
+
+    use PrestashopApi;
+
     public function login(Request $request)
     {
         $request->validate([
@@ -50,20 +54,22 @@ class AuthController extends Controller
 
         $fileName = Str::random(10) . '.jpg';
 
-        $filePath = public_path('images/' . $fileName);
+        $filePath = public_path('storage/images/' . $fileName);
 
         File::put($filePath, $imageData);
 
-        //$image = 'https://ai.airbagszentrum.com/images/' . $fileName;
+        //$image = 'https://ai.autorcpecas.pt/images/' . $fileName;
 
         $image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
+
+        $url = 'https://api.ocr.space/parse/imageurl?apikey=' . env('OCR_API_HEY') . '&url=' . $image;
 
         $curl = curl_init();
 
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => 'https://api.ocr.space/parse/imageurl?apikey=' . env('OCR_API_HEY') . '&url=' . $image,
+                CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -107,5 +113,31 @@ class AuthController extends Controller
 
         // Exibir o resultado
         return response()->json($filteredArray);
+    }
+
+    public function isValidReference($item)
+    {
+
+        // Verificar se o item tem mais de 5 caracteres e menos de 14 caracteres
+        $length = strlen($item);
+        if ($length <= 4 || $length >= 30) {
+            return false;
+        }
+
+        /*
+
+        // Verificar se o item contém apenas letras e números
+        if (preg_match('/[^A-Za-z0-9]/', $item)) {
+            return false;
+        }
+
+        */
+
+        return true;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories();
     }
 }
