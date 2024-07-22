@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Traits\PrestashopApi;;
+use App\Http\Controllers\Traits\PrestashopApi;
+;
 
 class AuthController extends Controller
 {
@@ -136,13 +137,30 @@ class AuthController extends Controller
         return true;
     }
 
-    public function getCategories()
+    public function getCategories($category_id)
     {
-        return $this->categories();
+        return $this->categories($category_id);
+    }
+
+    public function getCategory($category_id)
+    {
+        return $this->category($category_id);
     }
 
     public function getManufacturers()
     {
         return $this->manufacturers();
+    }
+
+    public function createProduct(Request $request)
+    {
+
+        return $this->newProduct($request);
+
+    }
+
+    public function getManufacturer($manufacturer_id)
+    {
+        return $this->manufacturer($manufacturer_id);
     }
 }
