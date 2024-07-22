@@ -9,29 +9,31 @@ trait PrestashopApi
 
     public function categories()
     {
+
         $curl = curl_init();
 
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => env('PRESTASHOP_WEBSITE') . '/api/categories?language=1&output_format=JSON&display=full',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: Basic ' . env('PRESTASHOP_API_KEY'),
-                ),
-            )
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => env('PRESTASHOP_WEBSITE') .'/api/categories?language=1&output_format=JSON&display=full',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic ' . env('PRESTASHOP_API_KEY')
+            ),
+        )
         );
 
         $response = curl_exec($curl);
 
         curl_close($curl);
-        return json_decode($response);
+        
+        return json_decode($response, true);
+
+
     }
 
     public function manufacturers()
@@ -235,6 +237,6 @@ trait PrestashopApi
         curl_close($curl);
         return json_decode($response);
 
-    }    
+    }
 
 }

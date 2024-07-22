@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Traits\PrestashopApi;
+use App\Http\Controllers\Traits\PrestashopApi;;
 
 class AuthController extends Controller
 {
@@ -139,5 +139,10 @@ class AuthController extends Controller
     public function getCategories()
     {
         return $this->categories();
+    }
+
+    public function getManufacturers()
+    {
+        return $this->manufacturers();
     }
 }
