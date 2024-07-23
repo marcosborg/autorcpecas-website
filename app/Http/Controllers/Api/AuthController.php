@@ -60,9 +60,9 @@ class AuthController extends Controller
 
         File::put($filePath, $imageData);
 
-        //$image = 'https://ai.autorcpecas.pt/images/' . $fileName;
+        $image = 'https://ai.autorcpecas.pt/images/' . $fileName;
 
-        $image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
+        //$image = 'https://autorcpecas.pt/label.jpg';
 
         $curl = curl_init();
 
@@ -77,7 +77,7 @@ class AuthController extends Controller
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array('url' => $image, 'OCREngine' => '2'),
             CURLOPT_HTTPHEADER => array(
-                'apikey: ' . env('PRESTASHOP_API_KEY')
+                'apikey: ' . env('OCR_API_HEY')
             ),
         )
         );
