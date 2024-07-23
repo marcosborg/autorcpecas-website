@@ -60,9 +60,9 @@ class AuthController extends Controller
 
         File::put($filePath, $imageData);
 
-        $image = 'https://ai.autorcpecas.pt/images/' . $fileName;
+        //$image = 'https://ai.autorcpecas.pt/images/' . $fileName;
 
-        //$image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
+        $image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
 
         $curl = curl_init();
 
