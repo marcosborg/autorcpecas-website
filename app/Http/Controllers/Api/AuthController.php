@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         $fileName = Str::random(10) . '.jpg';
 
-        $filePath = public_path('storage/images/' . $fileName);
+        $filePath = public_path('images/' . $fileName);
 
         File::put($filePath, $imageData);
 
