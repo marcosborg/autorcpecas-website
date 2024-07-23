@@ -63,7 +63,7 @@ class AuthController extends Controller
 
         //$image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
 
-        $url = 'https://api.ocr.space/parse/imageurl?apikey=' . env('OCR_API_HEY') . '&url=' . $image;
+        $url = 'https://api.ocr.space/parse/imageurl?apikey=' . env('OCR_API_HEY') . '&url=' . $image . '&OCREngine=2';
 
         $curl = curl_init();
 
