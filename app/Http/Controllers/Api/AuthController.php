@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Traits\PrestashopApi;
+
 ;
 
 class AuthController extends Controller
@@ -63,22 +64,22 @@ class AuthController extends Controller
 
         //$image = 'https://ai.airbagszentrum.com/images/aR5nNSA8Ma.jpg';
 
-        $url = 'https://api.ocr.space/parse/imageurl?apikey=' . env('OCR_API_HEY') . '&url=' . $image . '&OCREngine=2';
-
         $curl = curl_init();
 
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-            )
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.ocr.space/parse/image',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('url' => $image, 'OCREngine' => '2'),
+            CURLOPT_HTTPHEADER => array(
+                'apikey: ' . env('PRESTASHOP_API_KEY')
+            ),
+        )
         );
 
         $response = curl_exec($curl);
