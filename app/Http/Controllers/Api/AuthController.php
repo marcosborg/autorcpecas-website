@@ -167,8 +167,6 @@ class AuthController extends Controller
     public function uploadImage(Request $request)
     {
 
-        return [];
-
         // Verifica se a imagem foi enviada
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             // Obter a imagem enviada
