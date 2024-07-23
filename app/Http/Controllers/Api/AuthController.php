@@ -56,11 +56,11 @@ class AuthController extends Controller
 
         $fileName = Str::random(10) . '.jpg';
 
-        $filePath = public_path('images/' . $fileName);
+        $filePath = public_path('storage/images/' . $fileName);
 
         File::put($filePath, $imageData);
 
-        $image = 'https://ai.autorcpecas.pt/images/' . $fileName;
+        $image = 'https://ai.autorcpecas.pt/storage/images/' . $fileName;
 
         return $image;
 
