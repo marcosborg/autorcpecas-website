@@ -163,4 +163,55 @@ class AuthController extends Controller
     {
         return $this->manufacturer($manufacturer_id);
     }
+
+    public function uploadImage(Request $request)
+    {
+        // Verifica se a imagem foi enviada
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Obter a imagem enviada
+            $image = $request->file('image');
+
+            // Pega o caminho temporário do arquivo
+            $path = $image->getPathname();
+            $mimeType = $image->getClientMimeType();
+            $originalName = $image->getClientOriginalName();
+
+            // Configuração cURL
+            $curl = curl_init();
+
+            curl_setopt_array(
+                $curl,
+                array(
+                    CURLOPT_URL => env('PRESTASHOP_WEBSITE') . '/api/images/products/' . $request->product_id,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array('image' => new \CURLFile($path, $mimeType, $originalName)),
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Basic ' . env('PRESTASHOP_API_KEY'),
+                    ),
+                )
+            );
+
+            $response = curl_exec($curl);
+
+            // Verifica se houve algum erro
+            if (curl_errno($curl)) {
+                $error_msg = 'cURL error: ' . curl_error($curl);
+                curl_close($curl);
+                return response()->json(['error' => $error_msg], 500);
+            }
+
+            curl_close($curl);
+
+            // Retorna a resposta do servidor
+            return response()->json(['response' => $response], 200);
+        } else {
+            return response()->json(['error' => 'Imagem não enviada ou inválida.'], 400);
+        }
+    }
 }
