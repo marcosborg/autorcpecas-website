@@ -62,6 +62,8 @@ class AuthController extends Controller
 
         $image = 'https://ai.autorcpecas.pt/images/' . $fileName;
 
+        return $image;
+
         //$image = 'https://autorcpecas.pt/label.jpg';
 
         $curl = curl_init();
