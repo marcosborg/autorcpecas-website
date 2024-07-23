@@ -10,6 +10,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('get-manufacturers', 'Api\\AuthController@getManufacturers');
     Route::post('create-product', 'Api\\AuthController@createProduct');
     Route::get('get-manufacturer/{manufacturer_id}', 'Api\\AuthController@getManufacturer');
-    Route::post('upload-image', 'Api\\AuthController@uploadImage');
 
 });
+
+Route::post('upload-image', 'Api\\AuthController@uploadImage');
