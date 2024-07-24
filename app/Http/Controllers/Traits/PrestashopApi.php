@@ -149,14 +149,14 @@ trait PrestashopApi
             <show_price>1</show_price>
             <visibility>both</visibility>
             <meta_description>
-                <language id="1">' . $request->name_pt . '</language>
-                <language id="2">' . $request->name_es . '</language>
-                <language id="3">' . $request->name_en . '</language>
+                <language id="1">' . $request->name_pt . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="2">' . $request->name_es . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="3">' . $request->name_en . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
             </meta_description>
             <meta_title>
-                <language id="1">' . $request->name_pt . '</language>
-                <language id="2">' . $request->name_es . '</language>
-                <language id="3">' . $request->name_en . '</language>
+                <language id="1">' . $request->name_pt . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="2">' . $request->name_es . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="3">' . $request->name_en . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
             </meta_title>
             <link_rewrite>
                 <language id="1">' . Str::slug($request->name_pt) . '</language>
@@ -164,14 +164,14 @@ trait PrestashopApi
                 <language id="3">' . Str::slug($request->name_en) . '</language>
             </link_rewrite>
             <name>
-                <language id="1">' . $request->name_pt . '</language>
-                <language id="2">' . $request->name_es . '</language>
-                <language id="3">' . $request->name_en . '</language>
+                <language id="1">' . $request->name_pt . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="2">' . $request->name_es . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
+                <language id="3">' . $request->name_en . ($request->part_name !== '' ? ' - ' . $request->part_name : '') . '</language>
             </name>
             <description>
-                <language id="1">' . $request->references . $request->part_name . '</language>
-                <language id="2">' . $request->references . $request->part_name . '</language>
-                <language id="3">' . $request->references . $request->part_name . '</language>
+                <language id="1">' . $request->references . '</language>
+                <language id="2">' . $request->references . '</language>
+                <language id="3">' . $request->references . '</language>
             </description>
             <associations>
                 <categories>' . $html . '</categories>
