@@ -141,6 +141,38 @@
                 </ul>
             </li>
         @endcan
+        @can('chat_menu_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/conversations*") ? "c-show" : "" }} {{ request()->is("admin/messages*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-comments c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.chatMenu.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('conversation_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.conversations.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/conversations") || request()->is("admin/conversations/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-comments c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.conversation.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('message_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.messages.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/messages") || request()->is("admin/messages/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-comment c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.message.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

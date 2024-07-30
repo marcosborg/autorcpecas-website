@@ -14,3 +14,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::post('send-photo', 'Api\\AuthController@sendPhoto');
 Route::post('upload-image', 'Api\\AuthController@uploadImage');
+
+Route::prefix('chat')->group(function(){
+    Route::post('start-conversation', 'ChatController@startConversation');
+    Route::post('send-message', 'ChatController@sendMessage');
+});

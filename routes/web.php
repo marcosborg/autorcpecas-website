@@ -9,6 +9,8 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
+Route::get('chat', 'ChatController@chat');
+
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
@@ -50,6 +52,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Log History
     Route::delete('log-histories/destroy', 'LogHistoryController@massDestroy')->name('log-histories.massDestroy');
     Route::resource('log-histories', 'LogHistoryController');
+
+    // Conversation
+    Route::delete('conversations/destroy', 'ConversationController@massDestroy')->name('conversations.massDestroy');
+    Route::resource('conversations', 'ConversationController');
+
+    // Message
+    Route::delete('messages/destroy', 'MessageController@massDestroy')->name('messages.massDestroy');
+    Route::resource('messages', 'MessageController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
