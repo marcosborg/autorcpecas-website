@@ -19,7 +19,7 @@ class StoreConversationRequest extends FormRequest
         return [
             'thread' => [
                 'string',
-                'required',
+                'nullable',
             ],
         ];
     }

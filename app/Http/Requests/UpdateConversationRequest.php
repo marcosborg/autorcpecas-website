@@ -19,7 +19,7 @@ class UpdateConversationRequest extends FormRequest
         return [
             'thread' => [
                 'string',
-                'required',
+                'nullable',
             ],
         ];
     }

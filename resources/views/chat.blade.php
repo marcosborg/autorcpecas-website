@@ -116,20 +116,31 @@
         var conversation_id = null;
         $(() => {
             $('#message-textarea').keypress(function (e) {
-                if (e.which == 13) {
-                    if (!thread_id) {
-                        message_textarea.LoadingOverlay('show');
-                        startConversation().then((resp) => {
-                            message_textarea.LoadingOverlay('hide');
-                            thread_id = resp.data[0].thread_id;
-                            addMessageToContent('assistant', resp.data[0].content[0].text.value);
-                        });
-                    } else {
-                        message_textarea.LoadingOverlay('show');
-                        sendMessage().then((resp) => {
-                            message_textarea.LoadingOverlay('hide');
-                            addMessageToContent('assistant', resp.data[0].content[0].text.value);
-                        });
+                if (message_textarea.val().length > 1) {
+                    if (e.which == 13) {
+                        if (!thread_id) {
+                            message_textarea.LoadingOverlay('show');
+                            addMessageToLog ('user', message_textarea.val()).then((resp) => {
+                                conversation_id = resp.id;
+                                startConversation().then((resp) => {
+                                    message_textarea.LoadingOverlay('hide');
+                                    thread_id = resp.data[0].thread_id;
+                                    addMessageToLog ('assistant', resp.data[0].content[0].text.value).then(() => {
+                                        addMessageToContent('assistant', resp.data[0].content[0].text.value);
+                                    });
+                                });
+                            });
+                        } else {
+                            message_textarea.LoadingOverlay('show');
+                            addMessageToLog ('user', message_textarea.val()).then(() => {
+                                sendMessage().then((resp) => {
+                                    message_textarea.LoadingOverlay('hide');
+                                    addMessageToLog ('assistant', resp.data[0].content[0].text.value).then(() => {
+                                        addMessageToContent('assistant', resp.data[0].content[0].text.value);
+                                    });
+                                });
+                            });
+                        }
                     }
                 }
             });
@@ -204,6 +215,28 @@
             }
             chat_container.append(html);
             chat_container.scrollTop(chat_container[0].scrollHeight);
+        }
+        addMessageToLog = async (role, message) => {
+            let data = {
+                message: message,
+                conversation_id: conversation_id,
+                role: role
+            }
+            return new Promise((resolve, reject) => {
+                $.post({
+                    url: '/api/chat/add-message-to-log',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: data,
+                    success: (resp) => {
+                        resolve(resp);
+                    },
+                    error: (err) => {
+                        reject(err);
+                    }
+                });
+            });
         }
     </script>
 

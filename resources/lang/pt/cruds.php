@@ -185,7 +185,7 @@ return [
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
-            'thread'            => 'Thread',
+            'thread'            => 'ID',
             'thread_helper'     => ' ',
             'created_at'        => 'Created at',
             'created_at_helper' => ' ',
@@ -215,5 +215,4 @@ return [
             'deleted_at_helper'   => ' ',
         ],
     ],
-
 ];

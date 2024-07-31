@@ -11,8 +11,8 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="thread">{{ trans('cruds.conversation.fields.thread') }}</label>
-                <input class="form-control {{ $errors->has('thread') ? 'is-invalid' : '' }}" type="text" name="thread" id="thread" value="{{ old('thread', $conversation->thread) }}" required>
+                <label for="thread">{{ trans('cruds.conversation.fields.thread') }}</label>
+                <input class="form-control {{ $errors->has('thread') ? 'is-invalid' : '' }}" type="text" name="thread" id="thread" value="{{ old('thread', $conversation->thread) }}">
                 @if($errors->has('thread'))
                     <div class="invalid-feedback">
                         {{ $errors->first('thread') }}
