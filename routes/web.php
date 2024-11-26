@@ -62,7 +62,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('messages', 'MessageController');
 
     // Product Telepecas
-    Route::get('product-telepecas', 'ProductTelepecasController@index')->name('product-telepecas.index');
+    Route::prefix('product-telepecas')->group(function() {
+        Route::get('/', 'ProductTelepecasController@index')->name('product-telepecas.index');
+        Route::get('category-products/{category_id}', 'ProductTelepecasController@categoryProducts');
+    });
+    
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

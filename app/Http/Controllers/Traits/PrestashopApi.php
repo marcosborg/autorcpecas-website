@@ -34,8 +34,6 @@ trait PrestashopApi
         curl_close($curl);
 
         return json_decode($response, true);
-
-
     }
 
     public function category($category_id)
@@ -64,7 +62,6 @@ trait PrestashopApi
 
         curl_close($curl);
         return json_decode($response, true);
-
     }
 
     public function manufacturers()
@@ -93,7 +90,6 @@ trait PrestashopApi
 
         curl_close($curl);
         return json_decode($response);
-
     }
 
     public function manufacturer($manufacturer_id)
@@ -122,8 +118,6 @@ trait PrestashopApi
 
         curl_close($curl);
         return json_decode($response);
-
-
     }
 
     public function newProduct($request)
@@ -181,21 +175,23 @@ trait PrestashopApi
 
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => env('PRESTASHOP_WEBSITE') . '/api/products',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $xmlPayload,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/xml',
-                'Authorization: Basic ' . env('PRESTASHOP_API_KEY'),
-            ),
-        )
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => env('PRESTASHOP_WEBSITE') . '/api/products',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $xmlPayload,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/xml',
+                    'Authorization: Basic ' . env('PRESTASHOP_API_KEY'),
+                ),
+            )
         );
 
         $response = curl_exec($curl);
@@ -236,8 +232,6 @@ trait PrestashopApi
         return response()->json(['id' => $id, 'warnings' => $errorMessages], 200);
     }
 
-
-
     public function product($prestashop_id)
     {
 
@@ -264,7 +258,56 @@ trait PrestashopApi
 
         curl_close($curl);
         return json_decode($response);
-
     }
 
+    public function products($category_id, $page, $perPage)
+    {
+        // Obter dados da categoria
+        $data = $this->category($category_id);
+        $products = [];
+
+        if (!isset($data['categories'][0]['associations']['products'])) {
+            return [
+                'products' => $products,
+                'page' => $page,
+                'total_pages' => 0,
+            ];
+        }
+
+        // Obter a lista de produtos associados
+        $allProducts = $data['categories'][0]['associations']['products'];
+
+        // Calcular o total de produtos e páginas
+        $totalProducts = count($allProducts);
+        $totalPages = ceil($totalProducts / $perPage);
+
+        // Calcular o índice de início e final da paginação
+        $start = ($page - 1) * $perPage;
+        $end = min($start + $perPage, $totalProducts);
+
+        // Garantir que o índice não ultrapasse o total de produtos
+        if ($start >= $totalProducts) {
+            return [
+                'products' => $products,
+                'page' => $page,
+                'total_pages' => $totalPages,
+            ];
+        }
+
+        // Iterar apenas pelos produtos da página atual
+        for ($i = $start; $i < $end; $i++) {
+            $productId = $allProducts[$i]['id'];
+            $result = $this->product($productId);
+
+            if (isset($result->products[0])) {
+                $products[] = $result->products[0];
+            }
+        }
+
+        return [
+            'products' => $products,
+            'page' => $page,
+            'total_pages' => $totalPages,
+        ];
+    }
 }
