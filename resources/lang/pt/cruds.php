@@ -215,4 +215,12 @@ return [
             'deleted_at_helper'   => ' ',
         ],
     ],
+    'telepeca' => [
+        'title'          => 'Telepecas API',
+        'title_singular' => 'Telepecas API',
+    ],
+    'productTelepeca' => [
+        'title'          => 'Products',
+        'title_singular' => 'Product',
+    ],
 ];

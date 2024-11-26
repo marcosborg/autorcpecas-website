@@ -60,6 +60,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Message
     Route::delete('messages/destroy', 'MessageController@massDestroy')->name('messages.massDestroy');
     Route::resource('messages', 'MessageController');
+
+    // Product Telepecas
+    Route::get('product-telepecas', 'ProductTelepecasController@index')->name('product-telepecas.index');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
