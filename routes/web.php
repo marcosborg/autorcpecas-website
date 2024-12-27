@@ -66,6 +66,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('/', 'ProductTelepecasController@index')->name('product-telepecas.index');
         Route::get('category-products/{category_id}', 'ProductTelepecasController@categoryProducts');
     });
+
+    // Recambio Facil
+    Route::prefix('recambio-facils')->group(function() {
+        Route::get('/', 'RecambioFacilController@index')->name('recambio-facils.index');
+    });
     
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

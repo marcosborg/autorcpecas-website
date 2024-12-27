@@ -14,8 +14,9 @@
                     <th>Nome</th>
                     <th>Referência</th>
                     <th>Fabricante</th>
+                    <th>Categoria</th>
                     <th>Preço</th>
-                    <th>Imagem</th>
+                    <th>Imagens</th>
                     <th style="text-align: right"><input type="checkbox" id="checkbox_all" onclick=changeSelection()></th>
                 </tr>
             </thead>
@@ -26,10 +27,13 @@
                     <td>{{ $product->name[0]->value }}</td>
                     <td>{{ $product->reference }}</td>
                     <td>{{ $product->manufacturer_name }}</td>
+                    <td>{{ $category['categories'][0]['name'][0]['value'] }}</td>
                     <td>{{ $product->price }}</td>
                     <td>
                         @if (isset($product->associations->images))
-                        https://autorcpecas.pt/{{ $product->associations->images[0]->id }}-large_default/{{ $product->link_rewrite[0]->value }}.jpg
+                        @foreach ($product->associations->images as $image)
+                        https://autorcpecas.pt/{{ $image->id }}-large_default/{{ $product->link_rewrite[0]->value }}.jpg, 
+                        @endforeach
                         @endif
                     </td>
                     <td style="text-align: right">

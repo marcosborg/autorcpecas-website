@@ -291,6 +291,7 @@ trait PrestashopApi
                 'products' => $products,
                 'page' => $page,
                 'total_pages' => $totalPages,
+                'category' => $data
             ];
         }
 

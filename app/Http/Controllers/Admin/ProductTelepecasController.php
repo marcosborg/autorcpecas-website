@@ -24,6 +24,9 @@ class ProductTelepecasController extends Controller
 
     public function categoryProducts($category_id, Request $request)
     {
+
+        $category = $this->category($category_id);
+
         // Obter o número da página atual da query string ou usar a primeira página por padrão
         $page = $request->query('page', 1);
         $perPage = 20;
@@ -33,6 +36,6 @@ class ProductTelepecasController extends Controller
         $products = $paginationData['products'];
         $totalPages = $paginationData['total_pages'];
 
-        return view('admin.productTelepecas.products', compact('products', 'page', 'totalPages'));
+        return view('admin.productTelepecas.products', compact('products', 'page', 'totalPages', 'category'));
     }
 }

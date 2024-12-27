@@ -174,7 +174,7 @@
             </li>
         @endcan
         @can('telepeca_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/product-telepecas*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/product-telepecas*") ? "c-show" : "" }} {{ request()->is("admin/recambio-facils*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-cloud c-sidebar-nav-icon">
 
@@ -189,6 +189,16 @@
 
                                 </i>
                                 {{ trans('cruds.productTelepeca.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('recambio_facil_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.recambio-facils.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/recambio-facils") || request()->is("admin/recambio-facils/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-cloud-upload-alt c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.recambioFacil.title') }}
                             </a>
                         </li>
                     @endcan

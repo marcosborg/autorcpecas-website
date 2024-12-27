@@ -223,4 +223,8 @@ return [
         'title'          => 'Products',
         'title_singular' => 'Product',
     ],
+    'recambioFacil' => [
+        'title'          => 'Recambio Facil',
+        'title_singular' => 'Recambio Facil',
+    ],
 ];
