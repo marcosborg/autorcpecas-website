@@ -21,7 +21,7 @@ class SyncStocksToTelepecas extends Command
             return 1;
         }
 
-        $stocks = Stock::where('id', '>=', 329)->get();
+        $stocks = Stock::where('id', '>=', 5000)->get();
 
         foreach ($stocks as $stock) {
             $payload = [
